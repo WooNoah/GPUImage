@@ -50,7 +50,7 @@ extern NSString *const kGPUImageColorSwizzlingFragmentShaderString;
 @property(nonatomic, copy) NSArray *metaData;
 @property(nonatomic, assign, getter = isPaused) BOOL paused;
 @property(nonatomic, retain) GPUImageContext *movieWriterContext;
-
+// add by hyy 2017/08/03
 @property (nonatomic, assign) BOOL isNeedBreakAudioWhiter;
 
 // Initialization and teardown
