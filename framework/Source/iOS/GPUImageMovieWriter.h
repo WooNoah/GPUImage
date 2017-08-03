@@ -29,6 +29,8 @@ extern NSString *const kGPUImageColorSwizzlingFragmentShaderString;
 
     CGSize videoSize;
     GPUImageRotationMode inputRotation;
+    
+
 }
 
 @property(readwrite, nonatomic) BOOL hasAudioTrack;
@@ -48,6 +50,8 @@ extern NSString *const kGPUImageColorSwizzlingFragmentShaderString;
 @property(nonatomic, copy) NSArray *metaData;
 @property(nonatomic, assign, getter = isPaused) BOOL paused;
 @property(nonatomic, retain) GPUImageContext *movieWriterContext;
+
+@property (nonatomic, assign) BOOL isNeedBreakAudioWhiter;
 
 // Initialization and teardown
 - (id)initWithMovieURL:(NSURL *)newMovieURL size:(CGSize)newSize;
