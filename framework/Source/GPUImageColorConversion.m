@@ -92,12 +92,24 @@ NSString *const kGPUImageYUVFullRangeConversionForLAFragmentShaderString = SHADE
  
  void main()
  {
-     mediump vec3 yuv;
-     lowp vec3 rgb;
+     //     mediump vec3 yuv;
+     //     lowp vec3 rgb;
+     //
+     //     yuv.x = texture2D(luminanceTexture, textureCoordinate).r;
+     //     yuv.yz = texture2D(chrominanceTexture, textureCoordinate).ra - vec2(0.5, 0.5);
+     //     rgb = colorConversionMatrix * yuv;
+     //
+     //     gl_FragColor = vec4(rgb, 1);
+     highp vec3 yuv;
+     highp vec3 rgb;
      
      yuv.x = texture2D(luminanceTexture, textureCoordinate).r;
      yuv.yz = texture2D(chrominanceTexture, textureCoordinate).ra - vec2(0.5, 0.5);
-     rgb = colorConversionMatrix * yuv;
+     rgb = vec3(
+                yuv.x + 1.540 * yuv.z,
+                yuv.x - 0.459 * yuv.z - 0.183 * yuv.y,
+                yuv.x + 1.816 * yuv.y
+                );
      
      gl_FragColor = vec4(rgb, 1);
  }

@@ -31,7 +31,7 @@
     videoCamera.horizontallyMirrorFrontFacingCamera = NO;
     videoCamera.horizontallyMirrorRearFacingCamera = NO;
 
-    filter = [[GPUImageSepiaFilter alloc] init];
+    filter = [[GPUImageRGBDilationFilter alloc] init];
   
 //    filter = [[GPUImageTiltShiftFilter alloc] init];
 //    [(GPUImageTiltShiftFilter *)filter setTopFocusLevel:0.65];
@@ -64,56 +64,56 @@
     
     [videoCamera startCameraCapture];
     
-    double delayToStartRecording = 0.5;
-    dispatch_time_t startTime = dispatch_time(DISPATCH_TIME_NOW, delayToStartRecording * NSEC_PER_SEC);
-    dispatch_after(startTime, dispatch_get_main_queue(), ^(void){
-        NSLog(@"Start recording");
-        
-        videoCamera.audioEncodingTarget = movieWriter;
-        [movieWriter startRecording];
-
-//        NSError *error = nil;
-//        if (![videoCamera.inputCamera lockForConfiguration:&error])
-//        {
-//            NSLog(@"Error locking for configuration: %@", error);
-//        }
-//        [videoCamera.inputCamera setTorchMode:AVCaptureTorchModeOn];
-//        [videoCamera.inputCamera unlockForConfiguration];
-
-        double delayInSeconds = 10.0;
-        dispatch_time_t stopTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(stopTime, dispatch_get_main_queue(), ^(void){
-            
-            [filter removeTarget:movieWriter];
-            videoCamera.audioEncodingTarget = nil;
-            [movieWriter finishRecording];
-            NSLog(@"Movie completed");
-            
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:movieURL])
-            {
-                [library writeVideoAtPathToSavedPhotosAlbum:movieURL completionBlock:^(NSURL *assetURL, NSError *error)
-                 {
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         
-                         if (error) {
-                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Video Saving Failed"
-                                                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                             [alert show];
-                         } else {
-                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Video Saved" message:@"Saved To Photo Album"
-                                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                             [alert show];
-                         }
-                     });
-                 }];
-            }
-            
-//            [videoCamera.inputCamera lockForConfiguration:nil];
-//            [videoCamera.inputCamera setTorchMode:AVCaptureTorchModeOff];
-//            [videoCamera.inputCamera unlockForConfiguration];
-        });
-    });
+//    double delayToStartRecording = 0.5;
+//    dispatch_time_t startTime = dispatch_time(DISPATCH_TIME_NOW, delayToStartRecording * NSEC_PER_SEC);
+//    dispatch_after(startTime, dispatch_get_main_queue(), ^(void){
+//        NSLog(@"Start recording");
+//        
+//        videoCamera.audioEncodingTarget = movieWriter;
+//        [movieWriter startRecording];
+//
+////        NSError *error = nil;
+////        if (![videoCamera.inputCamera lockForConfiguration:&error])
+////        {
+////            NSLog(@"Error locking for configuration: %@", error);
+////        }
+////        [videoCamera.inputCamera setTorchMode:AVCaptureTorchModeOn];
+////        [videoCamera.inputCamera unlockForConfiguration];
+//
+//        double delayInSeconds = 10.0;
+//        dispatch_time_t stopTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+//        dispatch_after(stopTime, dispatch_get_main_queue(), ^(void){
+//            
+//            [filter removeTarget:movieWriter];
+//            videoCamera.audioEncodingTarget = nil;
+//            [movieWriter finishRecording];
+//            NSLog(@"Movie completed");
+//            
+//            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//            if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:movieURL])
+//            {
+//                [library writeVideoAtPathToSavedPhotosAlbum:movieURL completionBlock:^(NSURL *assetURL, NSError *error)
+//                 {
+//                     dispatch_async(dispatch_get_main_queue(), ^{
+//                         
+//                         if (error) {
+//                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Video Saving Failed"
+//                                                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//                             [alert show];
+//                         } else {
+//                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Video Saved" message:@"Saved To Photo Album"
+//                                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//                             [alert show];
+//                         }
+//                     });
+//                 }];
+//            }
+//            
+////            [videoCamera.inputCamera lockForConfiguration:nil];
+////            [videoCamera.inputCamera setTorchMode:AVCaptureTorchModeOff];
+////            [videoCamera.inputCamera unlockForConfiguration];
+//        });
+//    });
 }
 
 - (void)viewDidUnload
@@ -161,7 +161,7 @@
 
 - (IBAction)updateSliderValue:(id)sender
 {
-    [(GPUImageSepiaFilter *)filter setIntensity:[(UISlider *)sender value]];
+//    [(GPUImageSepiaFilter *)filter setIntensity:[(UISlider *)sender value]];
 }
 
 @end
