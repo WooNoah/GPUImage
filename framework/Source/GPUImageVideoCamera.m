@@ -92,14 +92,24 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
     
 	// Grab the back-facing or front-facing camera
     _inputCamera = nil;
-	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-	for (AVCaptureDevice *device in devices) 
-	{
-		if ([device position] == cameraPosition)
-		{
-			_inputCamera = device;
-		}
-	}
+    
+    AVCaptureDevice *dualCamera = nil;
+    if (@available(iOS 10.2, *)) {
+        dualCamera = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInDualCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionBack];
+    }
+    if (cameraPosition == AVCaptureDevicePositionBack && dualCamera != nil) {
+        _inputCamera = dualCamera;
+    }
+    else {
+        NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+        for (AVCaptureDevice *device in devices)
+        {
+            if ([device position] == cameraPosition)
+            {
+                _inputCamera = device;
+            }
+        }
+    }
     
     if (!_inputCamera) {
         return nil;
@@ -380,15 +390,25 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
         currentCameraPosition = AVCaptureDevicePositionBack;
     }
     
+    AVCaptureDevice *dualCamera = nil;
+    if (@available(iOS 10.2, *)) {
+        dualCamera = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInDualCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionBack];
+    }
     AVCaptureDevice *backFacingCamera = nil;
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-	for (AVCaptureDevice *device in devices) 
-	{
-		if ([device position] == currentCameraPosition)
-		{
-			backFacingCamera = device;
-		}
-	}
+    
+    if (currentCameraPosition == AVCaptureDevicePositionBack && dualCamera != nil) {
+        backFacingCamera = dualCamera;
+    }
+    else {
+        NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+        for (AVCaptureDevice *device in devices)
+        {
+            if ([device position] == currentCameraPosition)
+            {
+                backFacingCamera = device;
+            }
+        }
+    }
     newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:backFacingCamera error:&error];
     
     if (newVideoInput != nil)
