@@ -52,6 +52,7 @@ typedef NS_ENUM(NSUInteger, GPUImageRotationMode) {
 @protocol GPUImageInput <NSObject>
 @property(readonly) GPUImageRotationMode inputRotation;
 - (void)newFrameReadyAtTime:(CMTime)frameTime atIndex:(NSInteger)textureIndex;
+- (void)audioVolume:(float)volumeValue;
 - (void)setInputFramebuffer:(GPUImageFramebuffer *)newInputFramebuffer atIndex:(NSInteger)textureIndex;
 - (NSInteger)nextAvailableTextureIndex;
 - (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex;
