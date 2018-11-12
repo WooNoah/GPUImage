@@ -17,6 +17,7 @@
 @property (readwrite, retain) AVAsset *asset;
 @property (readwrite, retain) AVPlayerItem *playerItem;
 @property(readwrite, retain) NSURL *url;
+@property (nonatomic ,strong) NSArray* audioInfos;
 
 /** This enables the benchmarking mode, which logs out instantaneous and average frame times to the console
  */
