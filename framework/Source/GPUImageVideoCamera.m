@@ -889,7 +889,7 @@ void setColorConversion709( GLfloat conversionMatrix[9] )
 
 - (void)processAudioSampleBuffer:(CMSampleBufferRef)sampleBuffer;
 {
-    self.audioVolume = [self getVolumeLevelsFromeSampleBuffer:sampleBuffer];
+    self.audioVolume = [self getVolumeLevelsFromeSampleBuffer:sampleBuffer] / 5000.0;
     [self.audioEncodingTarget processAudioBuffer:sampleBuffer]; 
 }
 
