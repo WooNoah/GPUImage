@@ -535,8 +535,8 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
     float currentTime = CMTimeGetSeconds(currentSampleTime);
     
     int currentIndex = currentTime * 30;
-    if (currentIndex > self.audioInfos.count) {
-        currentIndex = self.audioInfos.count;
+    if (currentIndex >= self.audioInfos.count) {
+        currentIndex = self.audioInfos.count - 1;
     }
     NSNumber* temp = self.audioInfos[currentIndex];
     float auidoVolumeSampel = [temp floatValue];
